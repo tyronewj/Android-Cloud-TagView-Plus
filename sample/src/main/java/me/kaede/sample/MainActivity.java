@@ -10,12 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Random;
+
 import me.kaede.tagview.OnTagClickListener;
 import me.kaede.tagview.OnTagDeleteListener;
 import me.kaede.tagview.Tag;
 import me.kaede.tagview.TagView;
-
-import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -122,6 +123,7 @@ public class MainActivity extends ActionBarActivity {
 
 	    tag = new Tag("Deletable");
 	    tag.isDeletable=true;
+		tag.radius = 60f;
 	    tagView.addTag(tag);
 
 	    tag = new Tag("Custom Background");
