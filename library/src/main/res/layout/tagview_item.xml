@@ -5,23 +5,28 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_tag_item_contain"
+    <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
-        android:layout_height="30dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="宝宝" />
+        android:background="#378">
+
+        <TextView
+            android:id="@+id/tv_tag_item_contain"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="宝宝" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/tv_tag_item_delete"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_alignRight="@id/tv_tag_item_contain"
-        android:src="@drawable/del2"/>
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignRight="@id/rl_content"
+        android:src="@drawable/del2" />
 
 </RelativeLayout>
