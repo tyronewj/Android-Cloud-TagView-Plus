@@ -12,13 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.example.demo_cloud_tagview.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Android TagView Widget
@@ -59,6 +61,7 @@ public class TagView extends RelativeLayout {
 	int textPaddingRight;
 	int textPaddingTop;
 	int texPaddingBottom;
+	private boolean singleLine = false;
 
 
 	/**
@@ -180,18 +183,19 @@ public class TagView extends RelativeLayout {
 			// inflate tag layout
 			View tagLayout = (View) mInflater.inflate(R.layout.tagview_item, null);
 			tagLayout.setId(listIndex);
-			tagLayout.setBackgroundDrawable(getSelector(tag));
+
 
 			// tag text
 			TextView tagView = (TextView) tagLayout.findViewById(R.id.tv_tag_item_contain);
 			tagView.setText(tag.text);
 			//tagView.setPadding(textPaddingLeft, textPaddingTop, textPaddingRight, texPaddingBottom);
-			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tagView.getLayoutParams();
+			RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tagView.getLayoutParams();
 			params.setMargins(textPaddingLeft, textPaddingTop, textPaddingRight, texPaddingBottom);
 			tagView.setLayoutParams(params);
 			tagView.setTextColor(tag.tagTextColor);
 			tagView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tag.tagTextSize);
-			tagLayout.setOnClickListener(new OnClickListener() {
+			tagView.setBackgroundDrawable(getSelector(tag));
+			tagView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					if (mClickListener != null) {
@@ -205,17 +209,17 @@ public class TagView extends RelativeLayout {
 			// tagView padding (left & right)
 
 			// deletable text
-			TextView deletableView = (TextView) tagLayout.findViewById(R.id.tv_tag_item_delete);
+			ImageView deletableView = (ImageView) tagLayout.findViewById(R.id.tv_tag_item_delete);
 			if (tag.isDeletable) {
 				deletableView.setVisibility(View.VISIBLE);
-				deletableView.setText(tag.deleteIcon);
-				int offset = Utils.dpToPx(getContext(), 2f);
-				deletableView.setPadding(offset, textPaddingTop, textPaddingRight + offset, texPaddingBottom);
+//				deletableView.setText(tag.deleteIcon);
+//				int offset = Utils.dpToPx(getContext(), 2f);
+//				deletableView.setPadding(offset, textPaddingTop, textPaddingRight + offset, texPaddingBottom);
 				/*params = (LinearLayout.LayoutParams) deletableView.getLayoutParams();
 				params.setMargins(offset, textPaddingTop, textPaddingRight+offset, texPaddingBottom);
 				deletableView.setLayoutParams(params);*/
-				deletableView.setTextColor(tag.deleteIndicatorColor);
-				deletableView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tag.deleteIndicatorSize);
+//				deletableView.setTextColor(tag.deleteIndicatorColor);
+//				deletableView.setTextSize(TypedValue.COMPLEX_UNIT_SP, tag.deleteIndicatorSize);
 				deletableView.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -225,7 +229,8 @@ public class TagView extends RelativeLayout {
 						}
 					}
 				});
-				tagWidth += deletableView.getPaint().measureText(tag.deleteIcon) + textPaddingLeft + textPaddingRight;
+				tagWidth += textPaddingLeft + textPaddingRight;
+//						deletableView.getPaint().measureText(tag.deleteIcon) + textPaddingLeft + textPaddingRight;
 				// deletableView Padding (left & right)
 			} else {
 				deletableView.setVisibility(View.GONE);
@@ -237,7 +242,7 @@ public class TagView extends RelativeLayout {
 			//add margin of each line
 			tagParams.bottomMargin = lineMargin;
 
-			if (mWidth <= total + tagWidth + Utils.dpToPx(this.getContext(), Constants.LAYOUT_WIDTH_OFFSET)) {
+			if (mWidth <= total + tagWidth + Utils.dpToPx(this.getContext(), Constants.LAYOUT_WIDTH_OFFSET) && !singleLine) {
 				//need to add in new line
 				tagParams.addRule(RelativeLayout.BELOW, index_bottom);
 				// initialize total param (layout padding left & layout padding right)
@@ -256,8 +261,6 @@ public class TagView extends RelativeLayout {
 						index_bottom = listIndex;
 					}
 				}
-
-
 			}
 			total += tagWidth;
 			addView(tagLayout, tagParams);
@@ -284,6 +287,11 @@ public class TagView extends RelativeLayout {
 		//must add state_pressed first，or state_pressed will not take effect
 		states.addState(new int[]{}, gd_normal);
 		return states;
+	}
+
+
+	public void setSingleLine(boolean singleLine) {
+		this.singleLine = singleLine;
 	}
 
 
