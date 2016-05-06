@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/tv_tag_item_contain"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginTop="7dp"
+        android:layout_height="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:ellipsize="end"
-        android:singleLine="true" />
-
-    <TextView
-        android:id="@+id/tv_tag_item_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:visibility="gone"/>
+        android:text="宝宝" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/tv_tag_item_delete"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignRight="@id/tv_tag_item_contain"
+        android:src="@drawable/del2"/>
+
+</RelativeLayout>
